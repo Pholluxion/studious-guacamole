@@ -33,4 +33,10 @@ jobs:
     - name: Create the Docker image
       run: docker build . --file Dockerfile --tag pholluxion/core:$(date +%s)
 
+    - name: Push the Docker image
+      run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login ghcr.io -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+
+    - name: Push the Docker image
+      run: docker push pholluxion/core:$(date +%s)
+
 
