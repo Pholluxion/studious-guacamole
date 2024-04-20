@@ -30,14 +30,14 @@ class Fee {
         updatable = false
     )
     @SequenceGenerator(
-        name = "primary_sequence",
-        sequenceName = "primary_sequence",
+        name = "fee_sequence",
+        sequenceName = "fee_sequence",
         allocationSize = 1,
-        initialValue = 10000
+        initialValue = 1
     )
     @GeneratedValue(
         strategy = GenerationType.SEQUENCE,
-        generator = "primary_sequence"
+        generator = "fee_sequence"
     )
     var feeId: Int? = null
 

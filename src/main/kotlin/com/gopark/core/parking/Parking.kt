@@ -29,14 +29,14 @@ class Parking {
         updatable = false
     )
     @SequenceGenerator(
-        name = "primary_sequence",
-        sequenceName = "primary_sequence",
+        name = "parking_sequence",
+        sequenceName = "parking_sequence",
         allocationSize = 1,
-        initialValue = 10000
+        initialValue = 1
     )
     @GeneratedValue(
         strategy = GenerationType.SEQUENCE,
-        generator = "primary_sequence"
+        generator = "parking_sequence"
     )
     var parkingId: Int? = null
 

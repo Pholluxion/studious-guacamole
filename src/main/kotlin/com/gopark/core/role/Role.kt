@@ -25,14 +25,14 @@ class Role {
         updatable = false
     )
     @SequenceGenerator(
-        name = "primary_sequence",
-        sequenceName = "primary_sequence",
+        name = "role_sequence",
+        sequenceName = "role_sequence",
         allocationSize = 1,
-        initialValue = 10000
+        initialValue = 1
     )
     @GeneratedValue(
         strategy = GenerationType.SEQUENCE,
-        generator = "primary_sequence"
+        generator = "role_sequence"
     )
     var id: Long? = null
 

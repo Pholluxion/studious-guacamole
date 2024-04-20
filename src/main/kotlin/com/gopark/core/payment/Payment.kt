@@ -31,14 +31,14 @@ class Payment {
         updatable = false
     )
     @SequenceGenerator(
-        name = "primary_sequence",
-        sequenceName = "primary_sequence",
+        name = "payment_sequence",
+        sequenceName = "payment_sequence",
         allocationSize = 1,
-        initialValue = 10000
+        initialValue = 1
     )
     @GeneratedValue(
         strategy = GenerationType.SEQUENCE,
-        generator = "primary_sequence"
+        generator = "payment_sequence"
     )
     var paymentId: Int? = null
 
