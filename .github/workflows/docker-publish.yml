@@ -13,14 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Test Secret Access
-      run: |
-        if [ -z "${{ secrets.DOCKERHUB_USERNAME }}" ] || [ -z "${{ secrets.DOCKERHUB_TOKEN }}" ] || [ -z "${{ secrets.IMAGE_NAME }}" ]; then
-          echo "Secrets are not set or accessible"
-        else
-          echo "Secrets are properly set"
-        fi
-
+    
     - name: Checkout Code
       uses: actions/checkout@v2
 
