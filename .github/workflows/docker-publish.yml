@@ -15,7 +15,7 @@ jobs:
     steps:
     - name: Test Secret Access
       run: |
-        if [ -z "${{ secrets.DOCKERHUB_USERNAME }}" ] || [ -z "${{ secrets.DOCKERHUB_TOKEN }}" ]; then
+        if [ -z "${{ secrets.DOCKERHUB_USERNAME }}" ] || [ -z "${{ secrets.DOCKERHUB_TOKEN }}" ] || [ -z "${{ secrets.IMAGE_NAME }}" ]; then
           echo "Secrets are not set or accessible"
         else
           echo "Secrets are properly set"
@@ -37,10 +37,10 @@ jobs:
       run: ./gradlew build
 
     - name: Build Docker image
-      run: docker build . -t ${{ secrets.DOCKERHUB_USERNAME }}/core:latest
+      run: docker build . -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.IMAGE_NAME }}:latest
 
     - name: Log in to DockerHub
       run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
 
     - name: Push Docker image to DockerHub
-      run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/core:latest
+      run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.IMAGE_NAME }}:latest
