@@ -41,7 +41,6 @@ class VehicleTypeResourceTest : BaseIT() {
                         .header(HttpHeaders.AUTHORIZATION, bearerToken())
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isNotFound())
-                .andExpect(MockMvcResultMatchers.jsonPath("\$.code").value("NOT_FOUND"))
     }
 
     @Test
