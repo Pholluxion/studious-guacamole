@@ -15,19 +15,19 @@ class PaymentServiceImpl(
 ) : PaymentService {
 
     override fun findAll(filter: String?): List<PaymentDTO> {
-        var payments: List<Payment>
+        val payments: List<Payment>
         val sort = Sort.by("paymentId")
-        if (filter != null) {
-            payments = paymentRepository.findAllByPaymentId(filter.toIntOrNull(), sort)
+        payments = if (filter != null) {
+            paymentRepository.findAllByPaymentId(filter.toIntOrNull(), sort)
         } else {
-            payments = paymentRepository.findAll(sort)
+            paymentRepository.findAll(sort)
         }
         return payments.stream()
                 .map { payment -> mapToDTO(payment, PaymentDTO()) }
                 .toList()
     }
 
-    override fun `get`(paymentId: Int): PaymentDTO = paymentRepository.findById(paymentId)
+    override fun get(paymentId: Int): PaymentDTO = paymentRepository.findById(paymentId)
             .map { payment -> mapToDTO(payment, PaymentDTO()) }
             .orElseThrow { NotFoundException() }
 

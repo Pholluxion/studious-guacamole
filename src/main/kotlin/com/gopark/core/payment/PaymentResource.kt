@@ -5,7 +5,6 @@ import com.gopark.core.security.UserRoles
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import jakarta.validation.Valid
-import java.lang.Void
 import org.springframework.hateoas.CollectionModel
 import org.springframework.hateoas.EntityModel
 import org.springframework.http.HttpStatus
@@ -66,7 +65,7 @@ class PaymentResource(
 
     @DeleteMapping("/{paymentId}")
     @ApiResponse(responseCode = "204")
-    fun deletePayment(@PathVariable(name = "paymentId") paymentId: Int): ResponseEntity<Void> {
+    fun deletePayment(@PathVariable(name = "paymentId") paymentId: Int): ResponseEntity<Unit> {
         paymentService.delete(paymentId)
         return ResponseEntity.noContent().build()
     }

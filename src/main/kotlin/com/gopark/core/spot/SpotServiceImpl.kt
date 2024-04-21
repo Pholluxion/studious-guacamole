@@ -16,19 +16,19 @@ class SpotServiceImpl(
 ) : SpotService {
 
     override fun findAll(filter: String?): List<SpotDTO> {
-        var spots: List<Spot>
+        val spots: List<Spot>
         val sort = Sort.by("spotId")
-        if (filter != null) {
-            spots = spotRepository.findAllBySpotId(filter.toIntOrNull(), sort)
+        spots = if (filter != null) {
+            spotRepository.findAllBySpotId(filter.toIntOrNull(), sort)
         } else {
-            spots = spotRepository.findAll(sort)
+            spotRepository.findAll(sort)
         }
         return spots.stream()
                 .map { spot -> mapToDTO(spot, SpotDTO()) }
                 .toList()
     }
 
-    override fun `get`(spotId: Int): SpotDTO = spotRepository.findById(spotId)
+    override fun get(spotId: Int): SpotDTO = spotRepository.findById(spotId)
             .map { spot -> mapToDTO(spot, SpotDTO()) }
             .orElseThrow { NotFoundException() }
 

@@ -7,9 +7,9 @@ class ReferencedWarning {
 
     var key: String? = null
 
-    var params: ArrayList<Any> = ArrayList()
+    private var params: ArrayList<Any> = ArrayList()
 
-    fun addParam(`param`: Any?) {
+    fun addParam(param: Any?) {
         params.add(param!!)
     }
 

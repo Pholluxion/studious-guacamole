@@ -22,7 +22,7 @@ class FeeServiceImpl(
                 .toList()
     }
 
-    override fun `get`(feeId: Int): FeeDTO = feeRepository.findById(feeId)
+    override fun get(feeId: Int): FeeDTO = feeRepository.findById(feeId)
             .map { fee -> mapToDTO(fee, FeeDTO()) }
             .orElseThrow { NotFoundException() }
 

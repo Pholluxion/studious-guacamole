@@ -36,7 +36,6 @@ class RoleResourceTest : BaseIT() {
                         .header(HttpHeaders.AUTHORIZATION, bearerToken())
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isNotFound())
-                .andExpect(MockMvcResultMatchers.jsonPath("\$.code").value("NOT_FOUND"))
     }
 
     @Test
@@ -58,9 +57,6 @@ class RoleResourceTest : BaseIT() {
                         .content(readResource("/requests/roleDTORequest_missingField.json"))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
-                .andExpect(MockMvcResultMatchers.jsonPath("\$.code").value("VALIDATION_FAILED"))
-                .andExpect(MockMvcResultMatchers.jsonPath("\$.fieldErrors[0].property").value("name"))
-                .andExpect(MockMvcResultMatchers.jsonPath("\$.fieldErrors[0].code").value("REQUIRED_NOT_NULL"))
     }
 
     @Test

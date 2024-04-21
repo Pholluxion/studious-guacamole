@@ -18,19 +18,19 @@ class UserServiceImpl(
 ) : UserService {
 
     override fun findAll(filter: String?): List<UserDTO> {
-        var users: List<User>
+        val users: List<User>
         val sort = Sort.by("id")
-        if (filter != null) {
-            users = userRepository.findAllById(filter.toLongOrNull(), sort)
+        users = if (filter != null) {
+            userRepository.findAllById(filter.toLongOrNull(), sort)
         } else {
-            users = userRepository.findAll(sort)
+            userRepository.findAll(sort)
         }
         return users.stream()
                 .map { user -> mapToDTO(user, UserDTO()) }
                 .toList()
     }
 
-    override fun `get`(id: Long): UserDTO = userRepository.findById(id)
+    override fun get(id: Long): UserDTO = userRepository.findById(id)
             .map { user -> mapToDTO(user, UserDTO()) }
             .orElseThrow { NotFoundException() }
 

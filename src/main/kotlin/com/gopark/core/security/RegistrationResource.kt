@@ -1,7 +1,6 @@
 package com.gopark.core.security
 
 import jakarta.validation.Valid
-import java.lang.Void
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -15,7 +14,7 @@ class RegistrationResource(
 
     @PostMapping("/register")
     fun register(@RequestBody @Valid registrationRequest: RegistrationRequest):
-            ResponseEntity<Void> {
+            ResponseEntity<Unit> {
         registrationService.register(registrationRequest)
         return ResponseEntity.ok().build()
     }

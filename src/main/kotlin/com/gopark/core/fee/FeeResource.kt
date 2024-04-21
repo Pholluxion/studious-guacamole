@@ -6,7 +6,6 @@ import com.gopark.core.util.ReferencedException
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import jakarta.validation.Valid
-import java.lang.Void
 import org.springframework.hateoas.CollectionModel
 import org.springframework.hateoas.EntityModel
 import org.springframework.http.HttpStatus
@@ -64,7 +63,7 @@ class FeeResource(
 
     @DeleteMapping("/{feeId}")
     @ApiResponse(responseCode = "204")
-    fun deleteFee(@PathVariable(name = "feeId") feeId: Int): ResponseEntity<Void> {
+    fun deleteFee(@PathVariable(name = "feeId") feeId: Int): ResponseEntity<Unit> {
         val referencedWarning = feeService.getReferencedWarning(feeId)
         if (referencedWarning != null) {
             throw ReferencedException(referencedWarning)
