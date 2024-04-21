@@ -20,7 +20,7 @@ class VehicleTypeServiceImpl(
                 .toList()
     }
 
-    override fun `get`(vehicleTypeId: Int): VehicleTypeDTO =
+    override fun get(vehicleTypeId: Int): VehicleTypeDTO =
             vehicleTypeRepository.findById(vehicleTypeId)
             .map { vehicleType -> mapToDTO(vehicleType, VehicleTypeDTO()) }
             .orElseThrow { NotFoundException() }

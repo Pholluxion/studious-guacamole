@@ -12,7 +12,6 @@ class RoleNameUniqueValidator(
 
     override fun isValid(value: String?, cvContext: ConstraintValidatorContext): Boolean {
         if (value == null) {
-            // no value present
             return true
         }
         @Suppress("unchecked_cast") val pathVariables =

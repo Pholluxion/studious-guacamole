@@ -18,7 +18,7 @@ class JwtUserDetailsService(
         val user = userRepository.findByEmailIgnoreCase(username)
         if (user == null) {
             log.warn("user not found: {}", username)
-            throw UsernameNotFoundException("User ${username} not found")
+            throw UsernameNotFoundException("User $username not found")
         }
         val authorities = listOf(SimpleGrantedAuthority(user.role!!.name))
         return JwtUserDetails(user.id, username, user.password, authorities)

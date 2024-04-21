@@ -20,7 +20,7 @@ class RoleServiceImpl(
                 .toList()
     }
 
-    override fun `get`(id: Long): RoleDTO = roleRepository.findById(id)
+    override fun get(id: Long): RoleDTO = roleRepository.findById(id)
             .map { role -> mapToDTO(role, RoleDTO()) }
             .orElseThrow { NotFoundException() }
 

@@ -16,19 +16,19 @@ class ParkingServiceImpl(
 ) : ParkingService {
 
     override fun findAll(filter: String?): List<ParkingDTO> {
-        var parkings: List<Parking>
+        val parkings: List<Parking>
         val sort = Sort.by("parkingId")
-        if (filter != null) {
-            parkings = parkingRepository.findAllByParkingId(filter.toIntOrNull(), sort)
+        parkings = if (filter != null) {
+            parkingRepository.findAllByParkingId(filter.toIntOrNull(), sort)
         } else {
-            parkings = parkingRepository.findAll(sort)
+            parkingRepository.findAll(sort)
         }
         return parkings.stream()
                 .map { parking -> mapToDTO(parking, ParkingDTO()) }
                 .toList()
     }
 
-    override fun `get`(parkingId: Int): ParkingDTO = parkingRepository.findById(parkingId)
+    override fun get(parkingId: Int): ParkingDTO = parkingRepository.findById(parkingId)
             .map { parking -> mapToDTO(parking, ParkingDTO()) }
             .orElseThrow { NotFoundException() }
 

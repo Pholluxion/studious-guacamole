@@ -23,13 +23,9 @@ class JwtTokenService(
     privateKey: RSAPrivateKey
 ) {
 
-    private final val rsa256: Algorithm
+    private final val rsa256: Algorithm = Algorithm.RSA256(publicKey, privateKey)
 
-    private final val verifier: JWTVerifier
-    init {
-        this.rsa256 = Algorithm.RSA256(publicKey, privateKey)
-        this.verifier = JWT.require(this.rsa256).build()
-    }
+    private final val verifier: JWTVerifier = JWT.require(this.rsa256).build()
 
     fun generateToken(userDetails: UserDetails): String {
         val now = Instant.now()

@@ -25,7 +25,6 @@ class RegistrationService(
         user.email = registrationRequest.email
         user.password = passwordEncoder.encode(registrationRequest.password)
         user.documentNumber = registrationRequest.documentNumber
-        // assign default role
         user.role = roleRepository.findByName(UserRoles.SU)
         userRepository.save(user)
     }
