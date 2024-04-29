@@ -17,29 +17,29 @@ This is the core of the project. It contains the main logic of the project.
 ## Create a docker image
 
 ```bash
-docker build -t pholluxion/core:v1.0 .
+docker build -t pholluxion/core:latest .
 ```
 
 ## Run the docker image
 
 ```bash
-docker run -p 8080:8080 pholluxion/core:v1.0
+docker run -p 8080:8080 pholluxion/core:latest
 ```
 
 ## Push the docker image
 
 ```bash
-docker push pholluxion/core:v1.0
+docker push pholluxion/core:latest
 ```
 
 ## Up the docker compose
 
 ```bash
-docker-compose up
+docker compose up
 ```
 
 ## Down the docker compose
 
 ```bash
-docker-compose down
+docker compose down
 ```
