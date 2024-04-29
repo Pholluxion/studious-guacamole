@@ -12,7 +12,7 @@ plugins {
 group = "com.gopark"
 version = "0.0.1-SNAPSHOT"
 
-java.sourceCompatibility = JavaVersion.VERSION_21
+java.sourceCompatibility = JavaVersion.VERSION_17
 
 repositories {
     mavenCentral()
@@ -35,7 +35,7 @@ dependencies {
     runtimeOnly("org.postgresql:postgresql")
 
     developmentOnly("org.springframework.boot:spring-boot-devtools")
-    developmentOnly("org.springframework.boot:spring-boot-docker-compose")
+   // developmentOnly("org.springframework.boot:spring-boot-docker-compose")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.boot:spring-boot-testcontainers")
@@ -55,7 +55,7 @@ tasks.getByName<BootRun>("bootRun") {
 tasks.withType<KotlinCompile> {
     kotlinOptions {
         freeCompilerArgs = listOf("-Xjsr305=strict")
-        jvmTarget = "21"
+        jvmTarget = "17"
     }
 }
 

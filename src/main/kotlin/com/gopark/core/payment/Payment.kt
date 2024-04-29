@@ -15,8 +15,6 @@ import jakarta.persistence.SequenceGenerator
 import jakarta.persistence.Table
 import java.math.BigDecimal
 import java.time.OffsetDateTime
-import org.springframework.data.annotation.CreatedDate
-import org.springframework.data.annotation.LastModifiedDate
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
 
 
@@ -65,15 +63,5 @@ class Payment {
     )
     var fee: Fee? = null
 
-    @CreatedDate
-    @Column(
-        nullable = false,
-        updatable = false
-    )
-    var dateCreated: OffsetDateTime? = null
-
-    @LastModifiedDate
-    @Column(nullable = false)
-    var lastUpdated: OffsetDateTime? = null
 
 }
