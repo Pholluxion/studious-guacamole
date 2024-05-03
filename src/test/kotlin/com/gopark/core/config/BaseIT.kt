@@ -1,22 +1,22 @@
 package com.gopark.core.config
 
 import com.gopark.core.CoreApplication
-import com.gopark.core.fee.FeeRepository
-import com.gopark.core.parking.ParkingRepository
-import com.gopark.core.payment.PaymentRepository
-import com.gopark.core.role.RoleRepository
-import com.gopark.core.spot.SpotRepository
-import com.gopark.core.user.UserRepository
-import com.gopark.core.vehicle_type.VehicleTypeRepository
+import com.gopark.core.repos.ParkingRepository
+import com.gopark.core.repos.PaymentRepository
+import com.gopark.core.repos.RoleRepository
+import com.gopark.core.repos.SpotRepository
+import com.gopark.core.repos.UserRepository
+import com.gopark.core.repos.VehicleTypeRepository
+import io.restassured.RestAssured
+import jakarta.annotation.PostConstruct
 import java.nio.charset.StandardCharsets
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.boot.test.web.server.LocalServerPort
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.jdbc.Sql
 import org.springframework.test.context.jdbc.SqlMergeMode
-import org.springframework.test.web.servlet.MockMvc
 import org.springframework.util.StreamUtils
 import org.testcontainers.containers.PostgreSQLContainer
 
@@ -30,7 +30,6 @@ import org.testcontainers.containers.PostgreSQLContainer
     classes = [CoreApplication::class],
     webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
 )
-@AutoConfigureMockMvc
 @ActiveProfiles("it")
 @Sql(
     "/data/clearAll.sql",
@@ -40,17 +39,14 @@ import org.testcontainers.containers.PostgreSQLContainer
 @SqlMergeMode(SqlMergeMode.MergeMode.MERGE)
 abstract class BaseIT {
 
-    @Autowired
-    lateinit var mockMvc: MockMvc
-
-    @Autowired
-    lateinit var paymentRepository: PaymentRepository
-
-    @Autowired
-    lateinit var feeRepository: FeeRepository
+    @LocalServerPort
+    var serverPort = 0
 
     @Autowired
     lateinit var vehicleTypeRepository: VehicleTypeRepository
+
+    @Autowired
+    lateinit var paymentRepository: PaymentRepository
 
     @Autowired
     lateinit var spotRepository: SpotRepository
@@ -63,6 +59,13 @@ abstract class BaseIT {
 
     @Autowired
     lateinit var roleRepository: RoleRepository
+
+    @PostConstruct
+    fun initRestAssured() {
+        RestAssured.port = serverPort
+        RestAssured.urlEncodingEnabled = false
+        RestAssured.enableLoggingOfRequestAndResponseIfValidationFails()
+    }
 
     fun readResource(resourceName: String): String =
             StreamUtils.copyToString(this.javaClass.getResourceAsStream(resourceName),

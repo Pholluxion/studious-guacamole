@@ -1,8 +1,8 @@
 package com.gopark.core.config
 
-import com.gopark.core.security.JwtTokenService
-import com.gopark.core.security.JwtUserDetails
-import com.gopark.core.security.JwtUserDetailsService
+import com.gopark.core.model.JwtUserDetails
+import com.gopark.core.service.JwtTokenService
+import com.gopark.core.service.JwtUserDetailsService
 import jakarta.servlet.FilterChain
 import jakarta.servlet.ServletException
 import jakarta.servlet.http.HttpServletRequest

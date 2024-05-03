@@ -1,23 +1,19 @@
 INSERT INTO vehicle_types (
-    vehicle_type_id,
-    description,
-    date_created,
-    last_updated
+    id,
+    name,
+    fee
 ) VALUES (
-    1200,
+    1100,
     'Duis autem vel.',
-    '2023-09-02 16:30:00',
-    '2023-09-02 16:30:00'
+    54
 );
 
 INSERT INTO vehicle_types (
-    vehicle_type_id,
-    description,
-    date_created,
-    last_updated
+    id,
+    name,
+    fee
 ) VALUES (
-    1201,
+    1101,
     'Ut wisi enim.',
-    '2023-09-03 16:30:00',
-    '2023-09-03 16:30:00'
+    55
 );

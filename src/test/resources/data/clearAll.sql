@@ -1,8 +1,6 @@
-DELETE FROM payments;
-
-DELETE FROM fees;
-
 DELETE FROM vehicle_types;
+
+DELETE FROM payments;
 
 DELETE FROM spots;
 
