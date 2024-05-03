@@ -1,23 +1,15 @@
 INSERT INTO roles (
     id,
-    name,
-    date_created,
-    last_updated
+    name
 ) VALUES (
-    1600,
-    'SU',
-    '2023-09-02 16:30:00',
-    '2023-09-02 16:30:00'
+    1500,
+    'SU'
 );
 
 INSERT INTO roles (
     id,
-    name,
-    date_created,
-    last_updated
+    name
 ) VALUES (
-    1601,
-    'ADMIN',
-    '2023-09-03 16:30:00',
-    '2023-09-03 16:30:00'
+    1501,
+    'ADMIN'
 );

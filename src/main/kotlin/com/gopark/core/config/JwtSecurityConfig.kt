@@ -23,6 +23,7 @@ class JwtSecurityConfig(
 
     @Bean
     fun passwordEncoder(): PasswordEncoder {
+        // please note: existing hashes must contain {bcrypt} prefix
         return PasswordEncoderFactories.createDelegatingPasswordEncoder()
     }
 

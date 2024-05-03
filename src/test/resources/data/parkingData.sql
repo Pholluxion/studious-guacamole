@@ -1,31 +1,23 @@
 INSERT INTO parkings (
-    parking_id,
+    id,
     location,
     capacity,
-    owner_id,
-    date_created,
-    last_updated
+    owner_id
 ) VALUES (
-    1300,
+    1200,
     'Duis autem vel.',
     54,
-    1000,
-    '2023-09-02 16:30:00',
-    '2023-09-02 16:30:00'
+    1000
 );
 
 INSERT INTO parkings (
-    parking_id,
+    id,
     location,
     capacity,
-    owner_id,
-    date_created,
-    last_updated
+    owner_id
 ) VALUES (
-    1301,
+    1201,
     'Ut wisi enim.',
     53,
-    1001,
-    '2023-09-03 16:30:00',
-    '2023-09-03 16:30:00'
+    1001
 );
