@@ -1,39 +1,86 @@
-#services:
-#  db:
-#    image: postgres:16.2
-#    environment:
-#    - POSTGRES_DB=core
-#    - POSTGRES_USER=postgres
-#    - POSTGRES_PASSWORD=P4ssword!
-#    ports:
-#    - 5433:5432
-#
-#    volumes:
-#    - core-data:/var/lib/postgresql/data
-#
-#  core:
-#    image: pholluxion/core:latest
-#    environment:
-#    - POSTGRES_HOST=db
-#    - POSTGRES_PORT=5432
-#    - POSTGRES_DATABASE=core
-#    - POSTGRES_USER=postgres
-#    - POSTGRES_PASSWORD=P4ssword!
-#    - PORT=8080
-#
-#    ports:
-#    - 8080:8080
-#
-#    depends_on:
-#    - db
-#
-#    volumes:
-#    - core-data:/app/data
-#
-#networks:
-#  core-network:
-#    driver: bridge
-#
-#volumes:
-#  core-data:
-#      driver: local
+services:
+  db:
+    image: postgres:16.2
+    environment:
+    - POSTGRES_DB=core
+    - POSTGRES_USER=postgres
+    - POSTGRES_PASSWORD=P4ssword!
+    ports:
+    - 5432:5432
+    volumes:
+    - core-data:/var/lib/postgresql/data
+    networks:
+      - core-network
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    networks:
+      - core-network
+    volumes:
+      - core-data:/var/lib/rabbitmq
+
+  core:
+    image: pholluxion/core:latest
+    environment:
+    - POSTGRES_HOST=db
+    - POSTGRES_PORT=5432
+    - POSTGRES_DATABASE=core
+    - POSTGRES_USER=postgres
+    - POSTGRES_PASSWORD=P4ssword!
+    - PORT=8080
+    ports:
+    - 8080:8080
+    depends_on:
+    - db
+    volumes:
+    - core-data:/app/data
+    networks:
+      - core-network
+
+  payment-producer:
+    image: pholluxion/payment-producer:latest
+    environment:
+    - RABBITMQ_HOST=rabbitmq
+    - RABBITMQ_PORT=5672
+    - RABBITMQ_USER=guest
+    - RABBITMQ_PASSWORD=guest
+    ports:
+      - 8081:8081
+    depends_on:
+    - rabbitmq
+    volumes:
+      - core-data:/app/data
+    networks:
+      - core-network
+
+  payment-processor:
+    image: pholluxion/payment-processor:latest
+    environment:
+    - RABBITMQ_HOST=rabbitmq
+    - RABBITMQ_PORT=5672
+    - RABBITMQ_USER=guest
+    - RABBITMQ_PASSWORD=guest
+    - POSTGRES_HOST=db
+    - POSTGRES_PORT=5432
+    - POSTGRES_DATABASE=core
+    - POSTGRES_USER=postgres
+    - POSTGRES_PASSWORD=P4ssword!
+    depends_on:
+    - rabbitmq
+    - db
+    - payment-producer
+    volumes:
+      - core-data:/app/data
+    networks:
+      - core-network
+
+networks:
+  core-network:
+    driver: bridge
+
+volumes:
+  core-data:
+      driver: local
