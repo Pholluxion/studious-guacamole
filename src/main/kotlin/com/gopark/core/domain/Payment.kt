@@ -37,11 +37,12 @@ class Payment {
 
     @Column(
         precision = 12,
-        scale = 2
+        scale = 2,
+        name = "paid_amount"
     )
     var paidAmount: BigDecimal? = null
 
-    @Column
+    @Column(name  = "payment_time")
     var paymentTime: OffsetDateTime? = null
 
     @ManyToOne(fetch = FetchType.LAZY)
