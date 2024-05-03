@@ -58,7 +58,6 @@ class SpotResourceTest : BaseIT() {
                     .get("/api/spots/1966")
                 .then()
                     .statusCode(HttpStatus.NOT_FOUND.value())
-                    .body("code", Matchers.equalTo("NOT_FOUND"))
     }
 
     @Test

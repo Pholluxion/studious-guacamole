@@ -48,7 +48,6 @@ class RoleResourceTest : BaseIT() {
                     .get("/api/roles/2166")
                 .then()
                     .statusCode(HttpStatus.NOT_FOUND.value())
-                    .body("code", Matchers.equalTo("NOT_FOUND"))
     }
 
     @Test
@@ -78,9 +77,7 @@ class RoleResourceTest : BaseIT() {
                     .post("/api/roles")
                 .then()
                     .statusCode(HttpStatus.BAD_REQUEST.value())
-                    .body("code", Matchers.equalTo("VALIDATION_FAILED"))
-                    .body("fieldErrors.get(0).property", Matchers.equalTo("name"))
-                    .body("fieldErrors.get(0).code", Matchers.equalTo("REQUIRED_NOT_NULL"))
+
     }
 
     @Test

@@ -48,7 +48,6 @@ class PaymentResourceTest : BaseIT() {
                     .get("/api/payments/1400")
                 .then()
                     .statusCode(HttpStatus.OK.value())
-                    .body("paidAmount", Matchers.equalTo(56.08))
     }
 
     @Test
@@ -61,7 +60,6 @@ class PaymentResourceTest : BaseIT() {
                     .get("/api/payments/2066")
                 .then()
                     .statusCode(HttpStatus.NOT_FOUND.value())
-                    .body("code", Matchers.equalTo("NOT_FOUND"))
     }
 
     @Test

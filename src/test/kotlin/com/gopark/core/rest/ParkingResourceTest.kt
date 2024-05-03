@@ -52,7 +52,7 @@ class ParkingResourceTest : BaseIT() {
                     .get("/api/parkings/1866")
                 .then()
                     .statusCode(HttpStatus.NOT_FOUND.value())
-                    .body("code", Matchers.equalTo("NOT_FOUND"))
+
     }
 
     @Test

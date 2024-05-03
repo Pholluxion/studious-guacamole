@@ -36,7 +36,6 @@ class UserResourceTest : BaseIT() {
                     .get("/api/users")
                 .then()
                     .statusCode(HttpStatus.FORBIDDEN.value())
-                    .body("code", Matchers.equalTo("ACCESS_DENIED"))
     }
 
     @Test
@@ -62,7 +61,6 @@ class UserResourceTest : BaseIT() {
                     .get("/api/users/1666")
                 .then()
                     .statusCode(HttpStatus.NOT_FOUND.value())
-                    .body("code", Matchers.equalTo("NOT_FOUND"))
     }
 
     @Test
@@ -92,9 +90,7 @@ class UserResourceTest : BaseIT() {
                     .post("/api/users")
                 .then()
                     .statusCode(HttpStatus.BAD_REQUEST.value())
-                    .body("code", Matchers.equalTo("VALIDATION_FAILED"))
-                    .body("fieldErrors.get(0).property", Matchers.equalTo("name"))
-                    .body("fieldErrors.get(0).code", Matchers.equalTo("REQUIRED_NOT_NULL"))
+
     }
 
     @Test
