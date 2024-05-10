@@ -83,4 +83,9 @@ class UserServiceImpl(
         return null
     }
 
+    override fun findByEmail(email: String): UserDTO? {
+        val user = userRepository.findByEmail(email)
+        return user?.let { mapToDTO(it, UserDTO()) }
+    }
+
 }

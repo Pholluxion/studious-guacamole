@@ -15,4 +15,6 @@ interface UserRepository : JpaRepository<User, Long> {
 
     fun findFirstByRole(role: Role): User?
 
+    fun findByEmail(email: String): User?
+
 }
