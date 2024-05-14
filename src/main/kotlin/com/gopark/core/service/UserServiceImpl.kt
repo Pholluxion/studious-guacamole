@@ -71,16 +71,14 @@ class UserServiceImpl(
     }
 
     override fun getReferencedWarning(id: Long): ReferencedWarning? {
-        val referencedWarning = ReferencedWarning()
-        val user = userRepository.findById(id)
-                .orElseThrow { NotFoundException() }
-        val ownerParking = parkingRepository.findFirstByOwner(user)
-        if (ownerParking != null) {
-            referencedWarning.key = "user.parking.owner.referenced"
-            referencedWarning.addParam(ownerParking.id)
-            return referencedWarning
-        }
+
+
         return null
+    }
+
+    override fun findByEmail(email: String): UserDTO? {
+        val user = userRepository.findByEmail(email)
+        return user?.let { mapToDTO(it, UserDTO()) }
     }
 
 }

@@ -15,7 +15,7 @@ interface SpotService {
     fun update(id: Int, spotDTO: SpotDTO)
 
     fun delete(id: Int)
-
+    fun findAllByParkingId(parkingId: Int): List<SpotDTO>
     fun getReferencedWarning(id: Int): ReferencedWarning?
 
 }

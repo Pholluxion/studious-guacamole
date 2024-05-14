@@ -10,6 +10,8 @@ interface SpotRepository : JpaRepository<Spot, Int> {
 
     fun findFirstByParking(parking: Parking): Spot?
 
+    fun findAllByParkingId(parkingId: Int): List<Spot>
+
     fun findFirstByVehicleType(vehicleType: VehicleType): Spot?
 
 }

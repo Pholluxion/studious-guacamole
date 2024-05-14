@@ -1,6 +1,5 @@
 package com.gopark.core.dto
 
-import jakarta.validation.constraints.NotNull
 import jakarta.validation.constraints.Size
 
 
@@ -13,7 +12,7 @@ class ParkingDTO {
 
     var capacity: Int? = null
 
-    @NotNull
-    var owner: Long? = null
+    var available: Int? = null
+
 
 }

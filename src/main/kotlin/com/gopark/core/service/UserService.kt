@@ -18,4 +18,6 @@ interface UserService {
 
     fun getReferencedWarning(id: Long): ReferencedWarning?
 
+    fun findByEmail(email: String): UserDTO?
+
 }
