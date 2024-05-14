@@ -47,11 +47,12 @@ class UserResource(
     @DeleteMapping("/{id}")
     @ApiResponse(responseCode = "204")
     fun deleteUser(@PathVariable(name = "id") id: Long): ResponseEntity<Unit> {
-        val referencedWarning = userService.getReferencedWarning(id)
-        if (referencedWarning != null) {
-            throw ReferencedException(referencedWarning)
+
+        try {
+            userService.delete(id)
+        } catch (e: ReferencedException) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build()
         }
-        userService.delete(id)
         return ResponseEntity.noContent().build()
     }
 

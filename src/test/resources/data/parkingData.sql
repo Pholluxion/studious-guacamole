@@ -1,23 +1,19 @@
 INSERT INTO parkings (
     id,
     location,
-    capacity,
-    owner_id
+    capacity
 ) VALUES (
     1200,
     'Duis autem vel.',
-    54,
-    1000
+    54
 );
 
 INSERT INTO parkings (
     id,
     location,
-    capacity,
-    owner_id
+    capacity
 ) VALUES (
     1201,
     'Ut wisi enim.',
-    53,
-    1001
-);
+    53
+ );

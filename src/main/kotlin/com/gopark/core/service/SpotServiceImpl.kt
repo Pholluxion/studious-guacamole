@@ -48,6 +48,13 @@ class SpotServiceImpl(
         spotRepository.deleteById(id)
     }
 
+    override fun findAllByParkingId(parkingId: Int): List<SpotDTO> {
+        val spots = spotRepository.findAllByParkingId(parkingId)
+        return spots.stream()
+                .map { spot -> mapToDTO(spot, SpotDTO()) }
+                .toList()
+    }
+
     private fun mapToDTO(spot: Spot, spotDTO: SpotDTO): SpotDTO {
         spotDTO.id = spot.id
         spotDTO.licensePlate = spot.licensePlate

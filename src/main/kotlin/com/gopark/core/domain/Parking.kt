@@ -2,12 +2,9 @@ package com.gopark.core.domain
 
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
-import jakarta.persistence.FetchType
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
-import jakarta.persistence.JoinColumn
-import jakarta.persistence.ManyToOne
 import jakarta.persistence.SequenceGenerator
 import jakarta.persistence.Table
 
@@ -39,11 +36,7 @@ class Parking {
     @Column
     var capacity: Int? = null
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(
-        name = "owner_id",
-        nullable = false
-    )
-    var owner: User? = null
+    @Column
+    var available: Int? = null
 
 }
