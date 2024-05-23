@@ -30,6 +30,10 @@ class SpotResource(
     fun getSpot(@PathVariable(name = "id") id: Int): ResponseEntity<SpotDTO> =
             ResponseEntity.ok(spotService.get(id))
 
+    @GetMapping("/parking/{parkingId}")
+    fun getSpotsByParkingId(@PathVariable(name = "parkingId") parkingId: Int): ResponseEntity<List<SpotDTO>> =
+            ResponseEntity.ok(spotService.findAllByParkingId(parkingId))
+
     @PostMapping
     @ApiResponse(responseCode = "201")
     fun createSpot(@RequestBody @Valid spotDTO: SpotDTO): ResponseEntity<Int> {
