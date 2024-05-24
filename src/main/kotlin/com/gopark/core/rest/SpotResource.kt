@@ -1,6 +1,7 @@
 package com.gopark.core.rest
 
 import com.gopark.core.dto.SpotDTO
+import com.gopark.core.service.ParkingService
 import com.gopark.core.service.SpotService
 import com.gopark.core.util.ReferencedException
 import com.gopark.core.util.UserRoles
@@ -15,12 +16,18 @@ import org.springframework.web.bind.annotation.*
 
 
 @RestController
-@RequestMapping(value = ["/api/spots"],produces = [MediaType.APPLICATION_JSON_VALUE])
+@RequestMapping(value = ["/api/spots"], produces = [MediaType.APPLICATION_JSON_VALUE])
 @PreAuthorize("hasAuthority('" + UserRoles.SU + "')")
 @SecurityRequirement(name = "bearer-jwt")
-@CrossOrigin(maxAge = 3600, origins = ["*"], allowedHeaders = ["*"], methods = [RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE])
+@CrossOrigin(
+    maxAge = 3600,
+    origins = ["*"],
+    allowedHeaders = ["*"],
+    methods = [RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE]
+)
 class SpotResource(
-    private val spotService: SpotService
+    private val spotService: SpotService,
+    private val parkingService: ParkingService
 ) {
 
     @GetMapping
@@ -28,11 +35,25 @@ class SpotResource(
 
     @GetMapping("/{id}")
     fun getSpot(@PathVariable(name = "id") id: Int): ResponseEntity<SpotDTO> =
-            ResponseEntity.ok(spotService.get(id))
+        ResponseEntity.ok(spotService.get(id))
 
     @GetMapping("/parking/{parkingId}")
-    fun getSpotsByParkingId(@PathVariable(name = "parkingId") parkingId: Int): ResponseEntity<List<SpotDTO>> =
-            ResponseEntity.ok(spotService.findAllByParkingId(parkingId))
+    fun getSpotsByParkingId(@PathVariable(name = "parkingId") parkingId: Int): ResponseEntity<List<SpotDTO>> {
+        try {
+            parkingService.get(parkingId)
+
+            val spots = spotService.findAllByParkingId(parkingId)
+
+            if (spots.isEmpty()) {
+                return ResponseEntity.noContent().build()
+            }
+
+            return ResponseEntity.ok(spots)
+        } catch (e: Exception) {
+            return ResponseEntity.badRequest().build()
+        }
+
+    }
 
     @PostMapping
     @ApiResponse(responseCode = "201")
