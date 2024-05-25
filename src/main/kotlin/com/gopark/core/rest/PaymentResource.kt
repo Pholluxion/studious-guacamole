@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping(value = ["/api/payments"],produces = [MediaType.APPLICATION_JSON_VALUE])
-@PreAuthorize("hasAuthority('" + UserRoles.SU + "')")
 @SecurityRequirement(name = "bearer-jwt")
 @CrossOrigin(maxAge = 3600, origins = ["*"], allowedHeaders = ["*"], methods = [RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE])
 class PaymentResource(
@@ -23,6 +22,7 @@ class PaymentResource(
 ) {
 
     @GetMapping
+    @PreAuthorize("hasAuthority('" + UserRoles.SU + "')")
     fun getAllPayments(): ResponseEntity<List<PaymentDTO>> =
             ResponseEntity.ok(paymentService.findAll())
 
@@ -31,6 +31,7 @@ class PaymentResource(
             ResponseEntity.ok(paymentService.get(id))
 
     @PostMapping
+    @PreAuthorize("hasAuthority('" + UserRoles.SU + "')")
     @ApiResponse(responseCode = "201")
     fun createPayment(@RequestBody @Valid paymentDTO: PaymentDTO): ResponseEntity<Int> {
         val createdId = paymentService.create(paymentDTO)
@@ -38,6 +39,7 @@ class PaymentResource(
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('" + UserRoles.SU + "')")
     fun updatePayment(@PathVariable(name = "id") id: Int, @RequestBody @Valid
             paymentDTO: PaymentDTO): ResponseEntity<Int> {
         paymentService.update(id, paymentDTO)
@@ -46,6 +48,7 @@ class PaymentResource(
 
     @DeleteMapping("/{id}")
     @ApiResponse(responseCode = "204")
+    @PreAuthorize("hasAuthority('" + UserRoles.SU + "')")
     fun deletePayment(@PathVariable(name = "id") id: Int): ResponseEntity<Unit> {
         paymentService.delete(id)
         return ResponseEntity.noContent().build()

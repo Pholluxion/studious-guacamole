@@ -14,4 +14,6 @@ interface SpotRepository : JpaRepository<Spot, Int> {
 
     fun findFirstByVehicleType(vehicleType: VehicleType): Spot?
 
+    fun findFirstByLicensePlate(licensePlate: String): Spot?
+
 }

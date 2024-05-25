@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping(value = ["/api/spots"], produces = [MediaType.APPLICATION_JSON_VALUE])
-@PreAuthorize("hasAuthority('" + UserRoles.SU + "')")
 @SecurityRequirement(name = "bearer-jwt")
 @CrossOrigin(
     maxAge = 3600,
@@ -36,6 +35,20 @@ class SpotResource(
     @GetMapping("/{id}")
     fun getSpot(@PathVariable(name = "id") id: Int): ResponseEntity<SpotDTO> =
         ResponseEntity.ok(spotService.get(id))
+
+    //get spots by license plate
+    @GetMapping("/license/{licensePlate}")
+    fun getSpotsByLicensePlate(@PathVariable(name = "licensePlate") licensePlate: String): ResponseEntity<SpotDTO> {
+        try {
+            val spots = spotService.getByLicensePlate(licensePlate)
+
+            return ResponseEntity.ok(spots)
+
+        } catch (e: Exception) {
+            return ResponseEntity.noContent().build()
+        }
+
+    }
 
     @GetMapping("/parking/{parkingId}")
     fun getSpotsByParkingId(@PathVariable(name = "parkingId") parkingId: Int): ResponseEntity<List<SpotDTO>> {
@@ -56,6 +69,7 @@ class SpotResource(
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('" + UserRoles.SU + "')")
     @ApiResponse(responseCode = "201")
     fun createSpot(@RequestBody @Valid spotDTO: SpotDTO): ResponseEntity<Int> {
         val createdId = spotService.create(spotDTO)
@@ -63,6 +77,7 @@ class SpotResource(
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('" + UserRoles.SU + "')")
     fun updateSpot(@PathVariable(name = "id") id: Int, @RequestBody @Valid spotDTO: SpotDTO):
             ResponseEntity<Int> {
         spotService.update(id, spotDTO)
@@ -71,6 +86,7 @@ class SpotResource(
 
     @DeleteMapping("/{id}")
     @ApiResponse(responseCode = "204")
+    @PreAuthorize("hasAuthority('" + UserRoles.SU + "')")
     fun deleteSpot(@PathVariable(name = "id") id: Int): ResponseEntity<Unit> {
         val referencedWarning = spotService.getReferencedWarning(id)
         if (referencedWarning != null) {

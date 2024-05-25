@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping(value = ["/api/vehicleTypes"],produces = [MediaType.APPLICATION_JSON_VALUE])
-@PreAuthorize("hasAuthority('" + UserRoles.SU + "')")
 @SecurityRequirement(name = "bearer-jwt")
 @CrossOrigin(maxAge = 3600, origins = ["*"], allowedHeaders = ["*"], methods = [RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE])
 class VehicleTypeResource(
@@ -32,6 +31,7 @@ class VehicleTypeResource(
             ResponseEntity.ok(vehicleTypeService.get(id))
 
     @PostMapping
+    @PreAuthorize("hasAuthority('" + UserRoles.SU + "')")
     @ApiResponse(responseCode = "201")
     fun createVehicleType(@RequestBody @Valid vehicleTypeDTO: VehicleTypeDTO): ResponseEntity<Int> {
         val createdId = vehicleTypeService.create(vehicleTypeDTO)
@@ -39,6 +39,7 @@ class VehicleTypeResource(
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('" + UserRoles.SU + "')")
     fun updateVehicleType(@PathVariable(name = "id") id: Int, @RequestBody @Valid
             vehicleTypeDTO: VehicleTypeDTO): ResponseEntity<Int> {
         vehicleTypeService.update(id, vehicleTypeDTO)
@@ -47,6 +48,7 @@ class VehicleTypeResource(
 
     @DeleteMapping("/{id}")
     @ApiResponse(responseCode = "204")
+    @PreAuthorize("hasAuthority('" + UserRoles.SU + "')")
     fun deleteVehicleType(@PathVariable(name = "id") id: Int): ResponseEntity<Unit> {
         val referencedWarning = vehicleTypeService.getReferencedWarning(id)
         if (referencedWarning != null) {
