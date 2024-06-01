@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping(value = ["/api/roles"],produces = [MediaType.APPLICATION_JSON_VALUE])
-@PreAuthorize("hasAuthority('" + UserRoles.SU + "')")
 @SecurityRequirement(name = "bearer-jwt")
 @CrossOrigin(maxAge = 3600, origins = ["*"], allowedHeaders = ["*"], methods = [RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE])
 class RoleResource(
@@ -31,6 +30,7 @@ class RoleResource(
             ResponseEntity.ok(roleService.get(id))
 
     @PostMapping
+    @PreAuthorize("hasAuthority('" + UserRoles.SU + "')")
     @ApiResponse(responseCode = "201")
     fun createRole(@RequestBody @Valid roleDTO: RoleDTO): ResponseEntity<Long> {
         val createdId = roleService.create(roleDTO)
@@ -38,6 +38,7 @@ class RoleResource(
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('" + UserRoles.SU + "')")
     fun updateRole(@PathVariable(name = "id") id: Long, @RequestBody @Valid roleDTO: RoleDTO):
             ResponseEntity<Long> {
         roleService.update(id, roleDTO)
@@ -45,6 +46,7 @@ class RoleResource(
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('" + UserRoles.SU + "')")
     @ApiResponse(responseCode = "204")
     fun deleteRole(@PathVariable(name = "id") id: Long): ResponseEntity<Unit> {
         val referencedWarning = roleService.getReferencedWarning(id)

@@ -31,6 +31,12 @@ class SpotServiceImpl(
             .map { spot -> mapToDTO(spot, SpotDTO()) }
             .orElseThrow { NotFoundException() }
 
+    override fun getByLicensePlate(licensePlate: String): SpotDTO {
+        val spot = spotRepository.findFirstByLicensePlate(licensePlate)
+                ?: throw NotFoundException()
+        return mapToDTO(spot, SpotDTO())
+    }
+
     override fun create(spotDTO: SpotDTO): Int {
         val spot = Spot()
         mapToEntity(spotDTO, spot)
@@ -46,6 +52,13 @@ class SpotServiceImpl(
 
     override fun delete(id: Int) {
         spotRepository.deleteById(id)
+    }
+
+    override fun findAllByParkingId(parkingId: Int): List<SpotDTO> {
+        val spots = spotRepository.findAllByParkingId(parkingId)
+        return spots.stream()
+                .map { spot -> mapToDTO(spot, SpotDTO()) }
+                .toList()
     }
 
     private fun mapToDTO(spot: Spot, spotDTO: SpotDTO): SpotDTO {
